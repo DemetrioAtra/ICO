@@ -5,7 +5,7 @@ contract DevDToken {
 
     uint256 public totalSupply;
     
-    //constructor
+    // Constructor
     constructor() {
         totalSupply = 1000000;
     }
