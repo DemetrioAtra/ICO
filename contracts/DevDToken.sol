@@ -5,8 +5,8 @@ contract DevDToken {
 
     string public name = "DevD Token";
     string public symbol = "DEVD";
-    uint256 public totalSupply;
     string public standard = "DevD Token v1.0";
+    uint256 public totalSupply;
 
     event Transfer(
         address indexed _from,
@@ -14,20 +14,33 @@ contract DevDToken {
         uint256 _value
     );
 
+    event Approval(
+        address indexed _owner,
+        address indexed _spender,
+        uint256 _value
+    );
+
     mapping(address => uint256) public balanceOf;
-    
-    // Constructor
+    mapping(address => mapping(address => uint256)) public allowance;
+
     constructor(uint256 _initialSupply) {
         balanceOf[msg.sender] = _initialSupply;
         totalSupply = _initialSupply;
     }
 
     function transfer(address _to, uint256 _value) public returns (bool success) {
+
         require(balanceOf[msg.sender] >= _value);
         balanceOf[msg.sender] -= _value;
         balanceOf[_to] += _value;
-        // Transfer event
         emit Transfer(msg.sender, _to, _value);
+        return true;
+    }
+
+    function approval(address _spender, uint256 _value) public returns (bool success) {
+
+        allowance[msg.sender][_spender] = _value;
+        emit Approval(msg.sender, _spender, _value);
         return true;
     }
 }
