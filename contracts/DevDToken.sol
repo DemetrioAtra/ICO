@@ -29,18 +29,37 @@ contract DevDToken {
     }
 
     function transfer(address _to, uint256 _value) public returns (bool success) {
-
+        //Require
         require(balanceOf[msg.sender] >= _value);
+        //Logic
         balanceOf[msg.sender] -= _value;
         balanceOf[_to] += _value;
+        //Event
         emit Transfer(msg.sender, _to, _value);
+
         return true;
     }
 
-    function approval(address _spender, uint256 _value) public returns (bool success) {
-
+    function approve(address _spender, uint256 _value) public returns (bool success) {
+        //Logic
         allowance[msg.sender][_spender] = _value;
+        //Event
         emit Approval(msg.sender, _spender, _value);
+
+        return true;
+    }
+
+    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
+        //Require
+        require(_value <= balanceOf[_from]);
+        require(_value <= allowance[_from][msg.sender]);
+        //Logic
+        balanceOf[_from] -= _value;
+        balanceOf[_to] += _value;
+        allowance[_from][msg.sender] -= _value;
+        //Event
+        emit Transfer(_from, _to, _value);
+
         return true;
     }
 }
