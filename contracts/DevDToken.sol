@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.4.22 <0.9.0;
+pragma solidity >=0.8.3;
 
 contract DevDToken {
-
     string public name = "DevD Token";
     string public symbol = "DEVD";
     string public standard = "DevD Token v1.0";
